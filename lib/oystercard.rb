@@ -1,7 +1,9 @@
+# This is an oystercard class
 class Oystercard
   attr_reader :balance
   MAXIMUM_BALANCE = 90
   MINIMUM_BALANCE = 1
+  MINIMUM_CHARGE = 1
 
   def initialize
     self.balance = 0
@@ -9,13 +11,9 @@ class Oystercard
   end
 
   def top_up(amount)
-    fail "Max balance of #{MAXIMUM_BALANCE} exceeded" \
+    raise "Max balance of #{MAXIMUM_BALANCE} exceeded" \
       if go_over_max?(amount)
     self.balance += amount
-  end
-
-  def deduct(amount)
-    self.balance -= amount
   end
 
   def in_journey?
@@ -23,12 +21,13 @@ class Oystercard
   end
 
   def touch_in
-    fail "Balance is lower than #{MINIMUM_BALANCE}" \
+    raise "Balance is lower than #{MINIMUM_BALANCE}" \
       if balance < MINIMUM_BALANCE
     self.in_journey = true
   end
 
   def touch_out
+    deduct(MINIMUM_CHARGE)
     self.in_journey = false
   end
 
@@ -41,4 +40,7 @@ class Oystercard
     amount + balance > MAXIMUM_BALANCE
   end
 
+  def deduct(amount)
+    self.balance -= amount
+  end
 end
