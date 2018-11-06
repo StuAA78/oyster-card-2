@@ -21,12 +21,14 @@ class Oystercard
   end
 
   def touch_in
+    raise "Already touched in" if in_journey?
     raise "Balance is lower than #{MINIMUM_BALANCE}" \
       if balance < MINIMUM_BALANCE
     self.in_journey = true
   end
 
   def touch_out
+    raise "Not touched in" unless in_journey?
     deduct(MINIMUM_CHARGE)
     self.in_journey = false
   end
