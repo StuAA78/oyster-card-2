@@ -1,6 +1,7 @@
 class Oystercard
   attr_reader :balance
   MAXIMUM_BALANCE = 90
+  MINIMUM_BALANCE = 1
 
   def initialize
     self.balance = 0
@@ -22,6 +23,8 @@ class Oystercard
   end
 
   def touch_in
+    fail "Balance is lower than #{MINIMUM_BALANCE}" \
+      if balance < MINIMUM_BALANCE
     self.in_journey = true
   end
 

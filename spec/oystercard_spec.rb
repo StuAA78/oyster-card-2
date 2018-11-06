@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   max_balance = Oystercard::MAXIMUM_BALANCE
+  min_balance = Oystercard::MINIMUM_BALANCE
 
   it 'has a balance of zero' do
     expect(subject.balance).to eq (0)
@@ -33,13 +34,20 @@ describe Oystercard do
 
   describe '#touch_in' do
     it 'can touch in' do
+      subject.top_up min_balance
       subject.touch_in
       expect(subject).to be_in_journey
+    end
+
+    it 'raises an error when the balance is below the minimum' do
+      error = "Balance is lower than #{min_balance}"
+      expect { subject.touch_in }.to raise_error error
     end
   end
 
   describe '#touch_out' do
     it 'can touch out' do
+      subject.top_up min_balance
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
