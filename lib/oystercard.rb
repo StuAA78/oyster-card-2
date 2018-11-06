@@ -4,6 +4,7 @@ class Oystercard
 
   def initialize
     self.balance = 0
+    self.in_journey = false
   end
 
   def top_up(amount)
@@ -16,9 +17,22 @@ class Oystercard
     self.balance -= amount
   end
 
+  def in_journey?
+    in_journey
+  end
+
+  def touch_in
+    self.in_journey = true
+  end
+
+  def touch_out
+    self.in_journey = false
+  end
+
   private
 
   attr_writer :balance
+  attr_accessor :in_journey
 
   def go_over_max?(amount)
     amount + balance > MAXIMUM_BALANCE
