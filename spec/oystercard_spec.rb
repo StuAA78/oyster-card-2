@@ -9,8 +9,14 @@ describe Oystercard do
     @topped_up_card.top_up(max_balance)
   end
 
-  it 'has a balance of zero' do
-    expect(subject.balance).to eq 0
+  context 'new card' do
+    it 'has a balance of zero' do
+      expect(subject.balance).to eq 0
+    end
+
+    it 'is initially not in a journey' do
+      expect(subject).not_to be_in_journey
+    end
   end
 
   describe '#top_up' do
@@ -24,9 +30,7 @@ describe Oystercard do
     end
   end
 
-  it 'is initially not in a journey' do
-    expect(subject).not_to be_in_journey
-  end
+
 
   describe '#touch_in' do
     it 'can touch in' do
