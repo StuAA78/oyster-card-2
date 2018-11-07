@@ -6,6 +6,8 @@ describe Oystercard do
   min_charge = Oystercard::MINIMUM_CHARGE
   let(:station) { double('station') }
   let(:station2) { double('station') }
+  let(:journey) { double('station') }
+
   before(:example) do
     subject.top_up(max_balance)
   end
@@ -48,7 +50,7 @@ describe Oystercard do
 
     it 'stores the entry station' do
       subject.touch_in(station)
-      expect(subject.entry_station).to eq(station)
+      expect(subject.current_journey.entry_station).to eq(station)
     end
 
   end
@@ -74,10 +76,9 @@ describe Oystercard do
       subject.touch_out(station2)
       subject.touch_in(station2)
       subject.touch_out(station)
-      expect(subject.journey_history).to eq([
-        {entry_station: station, exit_station: station2},
-        {entry_station: station2, exit_station: station}
-        ])
+      expect(subject.journey_history.first.report).to eq(
+        {entry_station: station, exit_station: station2}
+        )
     end
   end
 end
