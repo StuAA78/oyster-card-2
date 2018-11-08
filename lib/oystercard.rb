@@ -44,8 +44,6 @@ class Oystercard
 
   private
 
-  attr_writer :balance
-
   def go_over_max?(amount)
     amount + balance > MAXIMUM_BALANCE
   end
