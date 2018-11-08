@@ -21,12 +21,14 @@ class Journey
 
   def fare
     return 6 if penalty?
+
     return 1 if completed?
+
     raise "Journey incomplete"
   end
 
   def live?
-    @entry_station != nil && @exit_station == nil
+    !@entry_station.nil? && @exit_station.nil?
   end
 
   def penalty?

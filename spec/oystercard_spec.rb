@@ -35,8 +35,6 @@ describe Oystercard do
     end
   end
 
-
-
   describe '#touch_in' do
     it 'can touch in' do
       subject.touch_in(station)
@@ -77,8 +75,8 @@ describe Oystercard do
       subject.touch_in(station2)
       subject.touch_out(station)
       expect(subject.journey_history.first.report).to eq(
-        {entry_station: station, exit_station: station2}
-        )
+        { entry_station: station, exit_station: station2 }
+      )
     end
   end
 end
